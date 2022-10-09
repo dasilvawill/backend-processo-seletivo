@@ -45,8 +45,7 @@ export class UserProfileController {
                 },
                 profile: {
                     connect: { profile_id: Number(profile_id) }
-                },
-                created_by
+                }
             }
         })
 

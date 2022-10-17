@@ -45,6 +45,8 @@ model UserProfile {
   user_profile_id Int      @id @default(autoincrement())
   user_id         Int
   profile_id      Int
+  unity_id        Int?
+  unity           Unity?   @relation(fields: [unity_id], references: [unity_id])
   created_at      DateTime @default(now())
   profile         Profile  @relation(fields: [profile_id], references: [profile_id])
   user            User     @relation(fields: [user_id], references: [user_id])
@@ -72,6 +74,8 @@ model Person {
   phone_number   String
   phone_number_2 String?
   business_phone String?
+  address_id     Int?
+  address        Address?   @relation(fields: [address_id], references: [address_id])
   ethnicity_id   Int?
   user_id        Int?       @unique
   updated_at     DateTime   @updatedAt
@@ -82,3 +86,81 @@ model Person {
 
   @@map("people")
 }
+
+model Address {
+  address_id  Int      @id @default(autoincrement())
+  city        String
+  district    String
+  street      String
+  number      Int
+  postal_code String
+  complement  String?
+  uf_id       Int
+  uf          Uf       @relation(fields: [uf_id], references: [uf_id])
+  Person      Person[]
+
+  @@map("adresses")
+}
+
+model Uf {
+  uf_id            Int       @id @default(autoincrement())
+  uf               String    @unique
+  federation_unity String    @unique
+  Address          Address[]
+
+  @@map("ufs")
+}
+
+model Unity {
+  unity_id         Int      @id @default(autoincrement())
+  unit_name        String
+  totvs_coligada   Int
+  totvs_filial     Int
+  totvs_cod_escola Int?
+  totvs_cod_polo   Int?
+  updated_at       DateTime @updatedAt
+  created_at       DateTime @default(now())
+
+  UserProfile UserProfile[]
+
+  @@map("units")
+}
+
+model AcademicPeriod {
+  academic_period_id Int      @id @default(autoincrement())
+  totvs_id           Int
+  totvs_code         String
+  description        String
+  active             Boolean
+  updated_by         String?
+  updated_at         DateTime @updatedAt
+  created_at         DateTime @default(now())
+
+  @@map("academic_periods")
+}
+
+// model Course {
+//   course_id            Int             @id @default(autoincrement())
+//   name                 String
+//   totvs_code           String
+//   course_type          String
+//   active               Boolean
+//   updated_at           DateTime        @updatedAt
+//   created_at           DateTime        @default(now())
+//   AppliedMatrix        AppliedMatrix[]
+
+//   @@map("courses")
+// }
+
+// model AppliedMatrix {
+//   applied_matrix_id         Int      @id @default(autoincrement())
+//   course_id                 Int
+//   course                    Course   @relation(fields: [course_id], references: [course_id])
+//   totvs_applied_matrix_code Int
+//   // unity_id
+//   active                    Boolean
+//   updated_at                DateTime @updatedAt
+//   created_at                DateTime @default(now())
+
+//   @@map("applied_matrices")
+// }

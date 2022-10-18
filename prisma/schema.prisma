@@ -83,6 +83,7 @@ model Person {
   created_at     DateTime   @default(now())
   ethnicity      Ethnicity? @relation(fields: [ethnicity_id], references: [ethnicity_id])
   user           User?      @relation(fields: [user_id], references: [user_id])
+  Enem           Enem[]
 
   @@map("people")
 }
@@ -121,46 +122,148 @@ model Unity {
   updated_at       DateTime @updatedAt
   created_at       DateTime @default(now())
 
-  UserProfile UserProfile[]
+  UserProfile   UserProfile[]
+  AppliedMatrix AppliedMatrix[]
 
   @@map("units")
 }
 
 model AcademicPeriod {
-  academic_period_id Int      @id @default(autoincrement())
+  academic_period_id Int            @id @default(autoincrement())
   totvs_id           Int
   totvs_code         String
   description        String
   active             Boolean
   updated_by         String?
-  updated_at         DateTime @updatedAt
-  created_at         DateTime @default(now())
+  updated_at         DateTime       @updatedAt
+  created_at         DateTime       @default(now())
+  EntranceExam       EntranceExam[]
 
   @@map("academic_periods")
 }
 
-// model Course {
-//   course_id            Int             @id @default(autoincrement())
-//   name                 String
-//   totvs_code           String
-//   course_type          String
-//   active               Boolean
-//   updated_at           DateTime        @updatedAt
-//   created_at           DateTime        @default(now())
-//   AppliedMatrix        AppliedMatrix[]
+model CourseType {
+  course_type_id Int      @id @default(autoincrement())
+  type           String
+  updated_at     DateTime @updatedAt
+  created_at     DateTime @default(now())
+  Course         Course[]
 
-//   @@map("courses")
-// }
+  @@map("course_types")
+}
 
-// model AppliedMatrix {
-//   applied_matrix_id         Int      @id @default(autoincrement())
-//   course_id                 Int
-//   course                    Course   @relation(fields: [course_id], references: [course_id])
-//   totvs_applied_matrix_code Int
-//   // unity_id
-//   active                    Boolean
-//   updated_at                DateTime @updatedAt
-//   created_at                DateTime @default(now())
+model Course {
+  course_id      Int             @id @default(autoincrement())
+  name           String
+  totvs_code     String
+  modality       String
+  course_type_id Int
+  course_type    CourseType      @relation(fields: [course_type_id], references: [course_type_id])
+  active         Boolean
+  updated_at     DateTime        @updatedAt
+  created_at     DateTime        @default(now())
+  AppliedMatrix  AppliedMatrix[]
+  CourseShift    CourseShift[]
 
-//   @@map("applied_matrices")
-// }
+  @@map("courses")
+}
+
+model AppliedMatrix {
+  applied_matrix_id         Int      @id @default(autoincrement())
+  course_id                 Int
+  course                    Course   @relation(fields: [course_id], references: [course_id])
+  totvs_applied_matrix_code Int
+  unity_id                  Int
+  unity                     Unity    @relation(fields: [unity_id], references: [unity_id])
+  active                    Boolean
+  updated_at                DateTime @updatedAt
+  created_at                DateTime @default(now())
+
+  @@map("applied_matrices")
+}
+
+model Shift {
+  shift_id    Int           @id @default(autoincrement())
+  shift       String
+  updated_at  DateTime      @updatedAt
+  created_at  DateTime      @default(now())
+  CourseShift CourseShift[]
+
+  @@map("shifts")
+}
+
+model CourseShift {
+  course_shift_id Int      @id @default(autoincrement())
+  course_id       Int
+  course          Course   @relation(fields: [course_id], references: [course_id])
+  shift_id        Int
+  shift           Shift    @relation(fields: [shift_id], references: [shift_id])
+  updated_at      DateTime @updatedAt
+  created_at      DateTime @default(now())
+
+  @@map("course_shifts")
+}
+
+model ProcessType {
+  process_type_id Int      @id @default(autoincrement())
+  process_type    String
+  updated_at      DateTime @updatedAt
+  created_at      DateTime @default(now())
+
+  @@map("process_types")
+}
+
+model Enem {
+  enem_id Int @id @default(autoincrement())
+
+  inscription    String
+  objective_note Float
+  essay_note     Float
+  year           Int
+  person_id      Int
+  person         Person   @relation(fields: [person_id], references: [person_id])
+  updated_at     DateTime @updatedAt
+  created_at     DateTime @default(now())
+
+  @@map("enem")
+}
+
+model TypeOfTest {
+  type_of_test_id Int    @id @default(autoincrement())
+  type            String
+  updated_at   DateTime       @updatedAt
+  created_at   DateTime       @default(now())
+  EntranceExam EntranceExam[]
+
+  @@map("types_of_test")
+}
+
+model TypeOfEntranceExam {
+  type_of_entrance_exam_id Int            @id @default(autoincrement())
+  type                     String
+  updated_at               DateTime       @updatedAt
+  created_at               DateTime       @default(now())
+  EntranceExam             EntranceExam[]
+
+  @@map("types_of_entrance_exam")
+}
+
+model EntranceExam {
+  entrance_exam_id         Int                @id @default(autoincrement())
+  entrance_exam            String
+  test_date                DateTime
+  inscriptions_start_date  DateTime
+  inscriptions_end_date    DateTime
+  allow_enem_grade         Boolean
+  type_of_test_id          Int
+  type_of_test             TypeOfTest         @relation(fields: [type_of_test_id], references: [type_of_test_id])
+  type_of_entrance_exam_id Int
+  type_of_entrance_exam    TypeOfEntranceExam @relation(fields: [type_of_entrance_exam_id], references: [type_of_entrance_exam_id])
+  notice                   String
+  academic_period_id       Int
+  academic_period          AcademicPeriod     @relation(fields: [academic_period_id], references: [academic_period_id])
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  @@map("entrance_exams")
+}

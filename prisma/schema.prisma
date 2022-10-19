@@ -51,7 +51,7 @@ model UserProfile {
   profile         Profile  @relation(fields: [profile_id], references: [profile_id])
   user            User     @relation(fields: [user_id], references: [user_id])
 
-  @@map("user_profile")
+  @@map("user_profiles")
 }
 
 model Ethnicity {

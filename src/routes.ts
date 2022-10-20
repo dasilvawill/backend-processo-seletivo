@@ -5,6 +5,7 @@ import { ProfileController } from "./controllers/ProfileController"
 import { UserProfileController } from "./controllers/UserProfileController"
 import { PersonController } from "./controllers/PersonController"
 import { ProcessController } from "./controllers/ProcessController"
+import { authToken } from './middleware/AuthMiddleware'
 
 const router = Router()
 
@@ -18,6 +19,10 @@ const process = new ProcessController()
 router.post("/api/leads", createLead.saveLead)
 
 router.post("/api/user", user.saveUser)
+router.post("/api/login", user.authUser)
+router.post("/api/rota_admin_autenticada", authToken, user.autentica)
+
+router.post("/api/person/", user.authUser)
 
 router.post("/api/person", person.savePerson)
 router.get("/api/person/get-consulters", person.getConsulters)

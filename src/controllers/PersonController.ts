@@ -6,7 +6,7 @@ export class PersonController {
 
     async savePerson(req: Request, res: Response){
 
-        const { complete_name, social_name, gender, birth_date, cpf, rg, phone_number, phone_number_2, business_phone, 
+        const { complete_name, social_name, gender, birth_date, cpf, rg, email, phone_number, phone_number_2, business_phone, 
             ethnicity_id, user_id, updated_by } = req.body
 
         const person = await prismaClient.person.create({
@@ -17,6 +17,7 @@ export class PersonController {
                 birth_date,
                 cpf,
                 rg,
+                email,
                 phone_number,
                 phone_number_2,
                 business_phone, 

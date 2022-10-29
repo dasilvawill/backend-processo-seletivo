@@ -71,6 +71,7 @@ model Person {
   birth_date     DateTime
   cpf            String        @unique
   rg             String?       @unique
+  email          String
   phone_number   String
   phone_number_2 String?
   business_phone String?

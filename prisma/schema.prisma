@@ -316,10 +316,10 @@ model Inscription {
   process_type           ProcessType       @relation(fields: [process_type_id], references: [process_type_id])
   inscription_status_id  Int
   inscription_status     InscriptionStatus @relation(fields: [inscription_status_id], references: [inscription_status_id])
-  enem_id                Int
-  enem                   Enem              @relation(fields: [enem_id], references: [enem_id])
-  overall_ranking_result Int
-  course_ranking_result  Int
+  enem_id                Int?
+  enem                   Enem?              @relation(fields: [enem_id], references: [enem_id])
+  overall_ranking_result Int?
+  course_ranking_result  Int?
 
   @@map("inscriptions")
 }

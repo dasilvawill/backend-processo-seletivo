@@ -45,7 +45,12 @@ export class InscriptionController {
                 process_type: true
               }
             },
-            entrance_exam_id: true
+            entrance_exam: {
+              select: {
+                entrance_exam_id: true,
+                entrance_exam: true
+              }
+            }
           }
         })
         

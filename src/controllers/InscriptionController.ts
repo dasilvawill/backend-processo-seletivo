@@ -38,6 +38,15 @@ export class InscriptionController {
               select: {
                 modality: true,
                 name: true,
+                AppliedMatrix: {
+                  select: {
+                    unity: {
+                      select: {
+                        unit_name: true
+                      }
+                    }
+                  }
+                }
               }
             },
             process_type: {

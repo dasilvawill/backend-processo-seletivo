@@ -41,7 +41,6 @@ router.get("/api/process/", process.getProcess)
 
 router.get("/api/courses/get-courses", course.getCourses)
 
-router.get("/api/inscriptions/get-inscriptions", inscription.getInscriptions)
-
+router.get("/api/person/:cpf/inscriptions", inscription.getInscriptions)
 
 export { router }

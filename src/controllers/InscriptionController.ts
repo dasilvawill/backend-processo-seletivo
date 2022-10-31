@@ -6,7 +6,27 @@ export class InscriptionController {
 
     async getInscriptions(req: Request, res: Response) {
 
+      const cpf = req.params.cpf
+
+        const person = await prismaClient.person.findUnique({
+          where: {
+            cpf: cpf
+          },
+          select: {
+            person_id: true
+          }
+        })
+
+
+
+        if (!person?.person_id){
+          return res.status(403).send({"message" : "CPF not found"})
+        } else {
+
         const inscriptions = await prismaClient.inscription.findMany({
+          where: {
+            person_id: person.person_id
+          },
           select: {
             person: {
               select: { 
@@ -64,6 +84,8 @@ export class InscriptionController {
         })
         
         return res.json(inscriptions)
+
+      }
 
     }
 

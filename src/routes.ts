@@ -6,6 +6,7 @@ import { UserProfileController } from "./controllers/UserProfileController"
 import { PersonController } from "./controllers/PersonController"
 import { ProcessController } from "./controllers/ProcessController"
 import { InscriptionController } from "./controllers/InscriptionController"
+import { CourseController } from "./controllers/CourseController"
 import { authToken } from './middleware/AuthMiddleware'
 
 const router = Router()
@@ -17,6 +18,7 @@ const userProfile = new UserProfileController()
 const person = new PersonController()
 const process = new ProcessController()
 const inscription = new InscriptionController()
+const course = new CourseController()
 
 router.post("/api/leads", createLead.saveLead)
 
@@ -36,6 +38,8 @@ router.post("/api/:user_id/:profile_id", userProfile.saveUserProfile)
 // router.get("/api/:user_id/:profile", createUser.saveUser)
 
 router.get("/api/process/", process.getProcess)
+
+router.get("/api/courses/get-courses", course.getCourses)
 
 router.get("/api/inscriptions/get-inscriptions", inscription.getInscriptions)
 

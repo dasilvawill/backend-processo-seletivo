@@ -24,23 +24,24 @@ router.post("/api/leads", createLead.saveLead)
 
 router.post("/api/user", user.saveUser)
 router.post("/api/login", user.authUser)
-router.post("/api/rota_admin_autenticada", authToken, user.autentica)
 
 router.post("/api/person/", user.authUser)
 
 router.post("/api/person", person.savePerson)
-router.get("/api/person/get-consulters", person.getConsulters)
+router.get("/api/person/get-consulters" ,person.getConsulters)
+
+router.get("/api/process", process.getProcess)
 
 router.post("/api/profile", profile.saveProfile)
 // router.get("/api/profile", createUser.saveUser)
 
-router.post("/api/:user_id/:profile_id", userProfile.saveUserProfile)
+router.post("/api/:user_id/:profile_id", authToken, userProfile.saveUserProfile)
 // router.get("/api/:user_id/:profile", createUser.saveUser)
 
-router.get("/api/process/", process.getProcess)
+router.post("/api/rota_admin_autenticada", authToken, user.autentica)
 
-router.get("/api/courses/get-courses", course.getCourses)
+router.get("/api/courses/get-courses", authToken, course.getCourses)
 
-router.get("/api/person/:cpf/inscriptions", inscription.getInscriptions)
+router.get("/api/person/:cpf/inscriptions", authToken, inscription.getInscriptions)
 
 export { router }

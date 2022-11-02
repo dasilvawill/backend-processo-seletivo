@@ -43,7 +43,7 @@ export class UserController {
         return res.status(403).send({"message" : "Incorrect user or password"})
       }
 
-      const token = jwt.sign({ id: usr.user_id}, "dfklygver7ynvgrkvudfsnvfd", { expiresIn: '1m' })
+      const token = jwt.sign({ id: usr.user_id}, "dfklygver7ynvgrkvudfsnvfd", { expiresIn: '2h' })
 
       return res.json({usuario: usr, token: token})
 

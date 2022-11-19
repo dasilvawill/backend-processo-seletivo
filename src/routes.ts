@@ -7,6 +7,7 @@ import { PersonController } from "./controllers/PersonController"
 import { ProcessController } from "./controllers/ProcessController"
 import { InscriptionController } from "./controllers/InscriptionController"
 import { CourseController } from "./controllers/CourseController"
+import { EntranceExamController } from "./controllers/EntranceExamController"
 import { authToken } from './middleware/AuthMiddleware'
 
 const router = Router()
@@ -19,6 +20,8 @@ const person = new PersonController()
 const process = new ProcessController()
 const inscription = new InscriptionController()
 const course = new CourseController()
+const exam = new EntranceExamController()
+
 
 router.post("/api/leads", createLead.saveLead)
 
@@ -41,6 +44,8 @@ router.post("/api/:user_id/:profile_id", authToken, userProfile.saveUserProfile)
 router.post("/api/rota_admin_autenticada", authToken, user.autentica)
 
 router.get("/api/courses/get-courses", authToken, course.getCourses)
+
+router.post("/api/entranceExam", authToken, exam.saveEntranceExam)
 
 router.get("/api/person/:cpf/inscriptions", authToken, inscription.getInscriptions)
 

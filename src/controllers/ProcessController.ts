@@ -45,13 +45,13 @@ export class ProcessController {
             if(x.curso_id == y.curso_id) {
 
               if(x.VESTIBULARES == null){
-                  x.VESTIBULARES = {value: y.value, label: y.label, permitir_nota_enem: y.permitir_nota_enem}
+                  x.VESTIBULARES = [{value: y.value, label: y.label, permitir_nota_enem: y.permitir_nota_enem}]
               } else {
-                  x.VESTIBULARES = [x.VESTIBULARES, {value: y.value, label: y.label, permitir_nota_enem: y.permitir_nota_enem}]
+                  x.VESTIBULARES = x.VESTIBULARES.concat({value: y.value, label: y.label, permitir_nota_enem: y.permitir_nota_enem})
                 }
               
             } else continue
-
+            
           }
         }
 

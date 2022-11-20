@@ -26,6 +26,7 @@ model User {
   created_at  DateTime      @default(now())
   UserProfile UserProfile[]
   Person      Person?
+  Inscription Inscription[]
 
   @@map("users")
 }
@@ -78,6 +79,7 @@ model Person {
   address_id     Int?
   address        Address?      @relation(fields: [address_id], references: [address_id])
   ethnicity_id   Int?
+  providence     String?
   user_id        Int?          @unique
   updated_at     DateTime      @updatedAt
   updated_by     String
@@ -318,9 +320,11 @@ model Inscription {
   inscription_status_id  Int
   inscription_status     InscriptionStatus @relation(fields: [inscription_status_id], references: [inscription_status_id])
   enem_id                Int?
-  enem                   Enem?              @relation(fields: [enem_id], references: [enem_id])
+  enem                   Enem?             @relation(fields: [enem_id], references: [enem_id])
   overall_ranking_result Int?
   course_ranking_result  Int?
+  user_id_consulter      Int?
+  user                   User?             @relation(fields: [user_id_consulter], references: [user_id])
 
   @@map("inscriptions")
 }

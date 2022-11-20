@@ -31,6 +31,16 @@ export class UserController {
         where: {
           user_name
         },
+        select: {
+          user_id: true,
+          user_name: true,
+          password: true,
+          Person: {
+            select: {
+              complete_name: true
+            }
+          }
+        }
       })
 
       if (!usr) {

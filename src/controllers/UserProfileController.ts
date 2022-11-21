@@ -13,6 +13,7 @@ export class UserProfileController {
                 user_id: Number(user_id)
             }
         })
+        
         if(!user_exists){
             return res.status(500).json("User not found!")
         }

@@ -21,6 +21,7 @@ export class ProcessController {
         a.modality as MODALIDADE,
         e.totvs_filial as FILIAL,
         e.unit_name as UNIDADE,
+        e.unity_id as UNIDADE_ID,
         '' as edital
       from courses                        a
       inner join course_shifts            b on (a.course_id = b.course_id)

@@ -46,10 +46,11 @@ router.post("/api/rota_admin_autenticada", authToken, user.autentica)
 
 router.get("/api/courses/get-courses", authToken, course.getCourses)
 
-router.get("/api/ufs/get-ufs", authToken, uf.getUfs)
+router.get("/api/ufs/get-ufs", uf.getUfs)
 
 router.post("/api/entranceExam", authToken, exam.saveEntranceExam)
 
 router.get("/api/person/:cpf/inscriptions", authToken, inscription.getInscriptions)
+router.post("/api/new-inscription", inscription.saveInscription)
 
 export { router }
